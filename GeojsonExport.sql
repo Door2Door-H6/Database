@@ -1,0 +1,49 @@
+use Door2doorZbc;
+--SELECT 
+--'Feature' as [type], 
+--JSON_QUERY( dbo.geometry2json( geom ) ) as [geometry],
+--qgs_fid as [properties.id],
+--geom.STGeometryType() as 'properties.type',
+--geom.ToString() as 'properties.wkt'
+--FROM SolidWalls 
+--FOR JSON PATH 
+
+--SELECT 
+--'Feature' as [type], 
+--JSON_QUERY( dbo.geometry2json( geom ) ) as [geometry],
+--geom.STGeometryType() as 'properties.type',
+--geom.ToString() as 'properties.wkt' ,
+--name as 'properties.name',
+--RoomType as 'properties.color'
+----((select RoomType from room)) as 'properties.color'
+--FROM Room 
+--FOR JSON PATH 
+
+
+--DROP FUNCTION IF EXISTS dbo.geometry2json
+--GO
+--CREATE FUNCTION dbo.geometry2json( @geo geometry)
+--RETURNS nvarchar(MAX) AS
+--BEGIN
+--RETURN (
+--'{' +
+--(CASE @geo.STGeometryType()
+--WHEN 'POINT' THEN
+--'"type": "Point","coordinates":' +
+--REPLACE(REPLACE(REPLACE(REPLACE(@geo.ToString(),'POINT ',''),'(','['),')',']'),' ',',')
+--WHEN 'POLYGON' THEN
+--'"type": "Polygon","coordinates":' +
+--'[' + REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(@geo.ToString(),'POLYGON ',''),'(','['),')',']'),'], ',']],['),', ','],['),' ',',') + ']'
+--WHEN 'MULTIPOLYGON' THEN
+--'"type": "MultiPolygon","coordinates":' +
+--'[' + REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(@geo.ToString(),'MULTIPOLYGON ',''),'(','['),')',']'),'], ',']],['),', ','],['),' ',',') + ']'
+--WHEN 'MULTIPOINT' THEN
+--'"type": "MultiPoint","coordinates":' +
+--'[' + REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(@geo.ToString(),'MULTIPOINT ',''),'(','['),')',']'),'], ',']],['),', ','],['),' ',',') + ']'
+--WHEN 'LINESTRING' THEN
+--'"type": "LineString","coordinates":' +
+--'[' + REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(@geo.ToString(),'LINESTRING ',''),'(','['),')',']'),'], ',']],['),', ','],['),' ',',') + ']'
+--ELSE NULL
+--END)
+--+'}')
+--END
