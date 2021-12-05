@@ -1,44 +1,7 @@
-create database Door2DoorZbc;
-GO
+Create database Door2DoorZbc;
 USE [Door2DoorZbc]
 GO
-/****** Object:  UserDefinedFunction [dbo].[geometry2json]    Script Date: 01/12/2021 10:18:00 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
--- region Functions
-CREATE FUNCTION [dbo].[geometry2json]( @geo geometry)
-RETURNS nvarchar(MAX) AS
-BEGIN
-RETURN (
-'{' +
-(CASE @geo.STGeometryType()
-WHEN 'POINT' THEN
-'"type": "Point","coordinates":' +
-REPLACE(REPLACE(REPLACE(REPLACE(@geo.ToString(),'POINT ',''),'(','['),')',']'),' ',',')
-WHEN 'POLYGON' THEN
-'"type": "Polygon","coordinates":' +
-'[' + REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(@geo.ToString(),'POLYGON ',''),'(','['),')',']'),'], ',']],['),', ','],['),' ',',') + ']'
-WHEN 'MULTIPOLYGON' THEN
-'"type": "MultiPolygon","coordinates":' +
-'[' + REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(@geo.ToString(),'MULTIPOLYGON ',''),'(','['),')',']'),'], ',']],['),', ','],['),' ',',') + ']'
-WHEN 'MULTIPOINT' THEN
-'"type": "MultiPoint","coordinates":' +
-'[' + REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(@geo.ToString(),'MULTIPOINT ',''),'(','['),')',']'),'], ',']],['),', ','],['),' ',',') + ']'
-WHEN 'LINESTRING' THEN
-'"type": "LineString","coordinates":' +
-'[' + REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(@geo.ToString(),'LINESTRING ',''),'(','['),')',']'),'], ',']],['),', ','],['),' ',',') + ']'
-ELSE NULL
-END)
-+'}')
-END
--- endregion
-
--- region Table creation
-GO
-/****** Object:  Table [dbo].[geometry_columns]    Script Date: 01/12/2021 10:18:00 ******/
+/****** Object:  Table [dbo].[geometry_columns]    Script Date: 03/12/2021 12:56:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -57,10 +20,10 @@ CREATE TABLE [dbo].[geometry_columns](
 	[f_table_schema] ASC,
 	[f_table_name] ASC,
 	[f_geometry_column] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Level]    Script Date: 01/12/2021 10:18:00 ******/
+/****** Object:  Table [dbo].[Level]    Script Date: 03/12/2021 12:56:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -71,10 +34,10 @@ CREATE TABLE [dbo].[Level](
 PRIMARY KEY CLUSTERED
 (
 	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[POI]    Script Date: 01/12/2021 10:18:00 ******/
+/****** Object:  Table [dbo].[POI]    Script Date: 03/12/2021 12:56:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -88,10 +51,10 @@ CREATE TABLE [dbo].[POI](
  CONSTRAINT [PK_POICopy] PRIMARY KEY CLUSTERED
 (
 	[qgs_fid] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[POIType]    Script Date: 01/12/2021 10:18:00 ******/
+/****** Object:  Table [dbo].[POIType]    Script Date: 03/12/2021 12:56:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -102,10 +65,10 @@ CREATE TABLE [dbo].[POIType](
 PRIMARY KEY CLUSTERED
 (
 	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Room]    Script Date: 01/12/2021 10:18:00 ******/
+/****** Object:  Table [dbo].[Room]    Script Date: 03/12/2021 12:56:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -119,10 +82,10 @@ CREATE TABLE [dbo].[Room](
  CONSTRAINT [PK_RoomsCopy] PRIMARY KEY CLUSTERED
 (
 	[qgs_fid] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[RoomLabels]    Script Date: 01/12/2021 10:18:00 ******/
+/****** Object:  Table [dbo].[RoomLabels]    Script Date: 03/12/2021 12:56:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -135,10 +98,10 @@ CREATE TABLE [dbo].[RoomLabels](
  CONSTRAINT [PK_RoomLabels] PRIMARY KEY CLUSTERED
 (
 	[qgs_fid] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[RoomType]    Script Date: 01/12/2021 10:18:00 ******/
+/****** Object:  Table [dbo].[RoomType]    Script Date: 03/12/2021 12:56:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -149,10 +112,10 @@ CREATE TABLE [dbo].[RoomType](
 PRIMARY KEY CLUSTERED
 (
 	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[SolidWalls]    Script Date: 01/12/2021 10:18:00 ******/
+/****** Object:  Table [dbo].[SolidWalls]    Script Date: 03/12/2021 12:56:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -163,10 +126,10 @@ CREATE TABLE [dbo].[SolidWalls](
  CONSTRAINT [PK_WallsCopyPloyGones] PRIMARY KEY CLUSTERED
 (
 	[qgs_fid] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[spatial_ref_sys]    Script Date: 01/12/2021 10:18:00 ******/
+/****** Object:  Table [dbo].[spatial_ref_sys]    Script Date: 03/12/2021 12:56:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -180,10 +143,10 @@ CREATE TABLE [dbo].[spatial_ref_sys](
 PRIMARY KEY CLUSTERED
 (
 	[srid] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[WalkableAreaTesting]    Script Date: 01/12/2021 10:18:00 ******/
+/****** Object:  Table [dbo].[WalkableAreaTesting]    Script Date: 03/12/2021 12:56:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -196,12 +159,8 @@ CREATE TABLE [dbo].[WalkableAreaTesting](
  CONSTRAINT [PK_WalableAreaTesting] PRIMARY KEY CLUSTERED
 (
 	[qgs_fid] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-
--- endregion
-
--- region Description
 GO
 INSERT [dbo].[geometry_columns] ([f_table_catalog], [f_table_schema], [f_table_name], [f_geometry_column], [coord_dimension], [srid], [geometry_type]) VALUES (N'Door2DoorZbc', N'dbo', N'POICopy', N'geom', 2, 4326, N'POINT')
 GO
@@ -426,4 +385,4 @@ REFERENCES [dbo].[RoomType] ([id])
 GO
 ALTER TABLE [dbo].[Room] CHECK CONSTRAINT [FK_Room_RoomType]
 GO
--- endregion
+
