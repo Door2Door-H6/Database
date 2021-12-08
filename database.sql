@@ -266,15 +266,15 @@ GO
 GO
 SET IDENTITY_INSERT [dbo].[RoomType] ON
 GO
-INSERT [dbo].[RoomType] ([id], [TypeName]) VALUES (1, N'Class room')
+INSERT [dbo].[RoomType] ([id], [TypeName]) VALUES (1, N'Klasseværelse')
 GO
 INSERT [dbo].[RoomType] ([id], [TypeName]) VALUES (2, N'Toilet')
 GO
-INSERT [dbo].[RoomType] ([id], [TypeName]) VALUES (3, N'Storage')
+INSERT [dbo].[RoomType] ([id], [TypeName]) VALUES (3, N'Opbevaring')
 GO
-INSERT [dbo].[RoomType] ([id], [TypeName]) VALUES (4, N'Teachers Room')
+INSERT [dbo].[RoomType] ([id], [TypeName]) VALUES (4, N'Lærerværelse')
 GO
-INSERT [dbo].[RoomType] ([id], [TypeName]) VALUES (5, N'Others')
+INSERT [dbo].[RoomType] ([id], [TypeName]) VALUES (5, N'Andre')
 GO
 SET IDENTITY_INSERT [dbo].[RoomType] OFF
 
